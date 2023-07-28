@@ -1,6 +1,6 @@
 import { users } from '../../database';
 import { User } from '../../classes';
-import { UserDTO } from '../../usecases';
+import { LoginDTO, UserDTO } from '../../usecases';
 
 export class UserRepository { 
     listUsers(){
@@ -8,9 +8,21 @@ export class UserRepository {
     }
 
     createUser(dados:UserDTO){
-        const user = new User(dados.name,dados.email,dados.password)
+        const user = new User(dados.email,dados.password, dados.remember)
         users.push(user)
 
         return user.toJSON();
     }
+
+    findUserByCredentials(dados: LoginDTO) {
+		const user = users.find(
+			(user) =>
+                user.toJSON().email === dados.email &&
+                user.toJSON().password === dados.password
+		);
+
+		if (!user) return;
+
+		return user.toJSON().id;
+	}
 }

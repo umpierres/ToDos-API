@@ -1,9 +1,9 @@
 import { UserRepository } from '../../repositories';
 
 export type UserDTO = {
-    name: string,
     email:string,
-    password: string
+    password: string,
+    remember:boolean
 }
 
 export type ReturnCreate = {
@@ -21,7 +21,7 @@ export class CreateUser{
         if(userExist){
             return {
 				success: false,
-				message: 'Usuário já cadastrado.',
+				message: 'Usuário já existe.',
 			};
         }
 

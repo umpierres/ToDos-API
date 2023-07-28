@@ -2,6 +2,8 @@ import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import { UserController } from './controllers';
+import { validateDataUser } from './middlewares/Users/validateDataUser';
+import { validateUserLogin } from './middlewares/Users/validateUserLogin';
 
 const app = express();
 const userController = new UserController();
@@ -16,4 +18,5 @@ app.listen(process.env.PORT, () => {
 
 app.get('/', (req, res) => res.send({ message: 'OK' }));
 
-app.post("/user", userController.create)
+app.post("/users/signup", validateDataUser, userController.create)
+app.post("/users/signin", validateUserLogin, userController.signin)
