@@ -8,7 +8,7 @@ export class UserRepository {
     }
 
     createUser(dados:UserDTO){
-        const user = new User(dados.email,dados.password, dados.remember)
+        const user = new User(dados.email,dados.password)
         users.push(user)
 
         return user.toJSON();

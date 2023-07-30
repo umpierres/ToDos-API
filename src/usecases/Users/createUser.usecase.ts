@@ -3,7 +3,6 @@ import { UserRepository } from '../../repositories';
 export type UserDTO = {
     email:string,
     password: string,
-    remember:boolean
 }
 
 export type ReturnCreate = {
