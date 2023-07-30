@@ -23,6 +23,6 @@ export class UserRepository {
 
 		if (!user) return;
 
-		return user.toJSON().id;
+		return user.toJSON()
 	}
 }

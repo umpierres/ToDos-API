@@ -5,10 +5,15 @@ export type LoginDTO = {
 	password: string;
 };
 
+export type LoginResponseDTO = {
+	id: string;
+	email:string
+}
+
 type LoginUserResponse = {
 	success: boolean;
 	message: string;
-	data?: string;
+	data?: LoginResponseDTO;
 };
 
 export class LoginUser {
@@ -27,7 +32,7 @@ export class LoginUser {
 
 		return {
 			success: true,
-			message: 'Cadastro encontadro! Bem-vindo(a)',
+			message: 'Cadastro encontrado! Bem-vindo(a)',
 			data: findUser,
 		};
 	}
