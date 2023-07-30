@@ -27,7 +27,7 @@ export class LoginUser {
 
 		return {
 			success: true,
-			message: 'Dados Corretos!',
+			message: 'Cadastro encontadro! Bem-vindo(a)',
 			data: findUser,
 		};
 	}
