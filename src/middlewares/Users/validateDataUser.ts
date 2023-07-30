@@ -10,14 +10,14 @@ export function validateDataUser(req:Request, res: Response, next: NextFunction)
 			.json({ message: 'Insira todos os dados para cadastrar o usúario.' });
 	}
 
-	if (!user.email.includes('@') || !user.email.endsWith('.com') || !user.email.endsWith('.com.br')) {
+	if (!user.email.includes('@') || !user.email.includes('.com')) {
 		return res.status(400).json({ message: 'Insira um email válido.' });
 	}
 
-	if (user.password.length < 8) {
+	if (user.password.length < 6) {
 		return res
 			.status(400)
-			.json({ message: 'Insira no mínimo 8 caracteres para senha.' });
+			.json({ message: 'Insira no mínimo 6 caracteres para senha.' });
 	}
 
 	next();
