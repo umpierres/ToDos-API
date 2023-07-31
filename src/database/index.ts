@@ -1,2 +1,4 @@
-import { User } from '../classes';
+import { User, Note } from '../classes';
 export const users: User[] = [];
+
+export const notes: Note[] = [];

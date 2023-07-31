@@ -4,11 +4,11 @@ import { LoginUser } from "../../usecases/Users/loginUser.usecase";
 export class UserController {
 
     create(req: Request, res:Response){
-        const {email, password, remember} = req.body
+        const {email, password} = req.body
 
         const usecase = new CreateUser()
 
-        const response = usecase.execute({ email, password, remember })
+        const response = usecase.execute({ email, password })
 
         if(!response.success){
             return res.status(400).json(response);
@@ -18,11 +18,11 @@ export class UserController {
     }
 
     signin(req: Request, res: Response) {
-		const { email, password,remember } = req.body;
+		const { email, password } = req.body;
 
 		const usecase = new LoginUser();
 
-		const response = usecase.execute({ email, password , remember});
+		const response = usecase.execute({ email, password});
 
 		if (!response.success) {
 			return res.status(401).json(response);
