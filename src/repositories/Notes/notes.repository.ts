@@ -24,10 +24,6 @@ export class NoteRepository {
             throw new Error("Nota não encontrada.");
         }
 
-        if(!dados.description || !dados.title){
-            throw new Error("Campo obrigatorio.");
-        }
-
         notes[noteIndex].setTitle(dados.title);
         notes[noteIndex].setDescription(dados.description);
 
