@@ -48,4 +48,27 @@ export class Note extends BaseClass {
     getDate(): Date {
         return this.date;
     }
+    setTitle(title: string): void {
+        this.title = title;
+    }
+
+    setDescription(description: string): void {
+        this.description = description;
+    }
+
+    setOwner(owner: User): void {
+        this.owner = owner;
+    }
+
+    setArchived(archived: boolean): void {
+        this.archived = archived;
+    }
+
+    setFavorite(favorite: boolean): void {
+        this.favorite = favorite;
+    }
+
+    setDate(date: Date): void {
+        this.date = date;
+    }
 }
