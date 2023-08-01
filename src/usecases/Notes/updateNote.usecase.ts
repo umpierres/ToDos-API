@@ -1,6 +1,10 @@
-import { Note, User } from '../../classes';
+import { Note } from '../../classes';
 import { NoteRepository } from '../../repositories';
-import { NoteDTO } from './createNote.usecase';
+
+export type UpdateNoteDTO = {
+    title:string,
+    description: string,
+}
 
 export type ReturnUpdate = {
     success: boolean;
@@ -9,7 +13,7 @@ export type ReturnUpdate = {
 };
 
 export class UpdateNote {
-    execute(id: string, data: NoteDTO): ReturnUpdate {
+    execute(id: string, data: UpdateNoteDTO): ReturnUpdate {
         const repository = new NoteRepository();
 
         const updatedNote = repository.updateNote(id, data);

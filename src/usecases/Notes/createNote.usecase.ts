@@ -1,7 +1,7 @@
 import { Note, User } from '../../classes';
 import { NoteRepository } from '../../repositories';
 
-export type NoteDTO = {
+export type CreateNoteDTO = {
     title:string,
     description: string,
     owner: User,
@@ -9,14 +9,14 @@ export type NoteDTO = {
     archived: boolean,
 }
 
-export type ReturnCreate = {
+export type ReturnCreateNote = {
 	success: boolean;
 	message: string;
 	data?: Note 
 };
 
 export class CreateNote{
-    execute(data: NoteDTO): ReturnCreate{
+    execute(data: CreateNoteDTO): ReturnCreateNote{
         const repository = new NoteRepository();
 
         const newNote = repository.createNote(data)

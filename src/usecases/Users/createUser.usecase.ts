@@ -5,14 +5,14 @@ export type UserDTO = {
     password: string,
 }
 
-export type ReturnCreate = {
+export type ReturnCreateUser = {
 	success: boolean;
 	message: string;
 	data?: UserDTO & { id: string };
 };
 
 export class CreateUser{
-    execute(data: UserDTO): ReturnCreate{
+    execute(data: UserDTO): ReturnCreateUser{
         const repository = new UserRepository();
 
         const userExist = repository.listUsers().some((user) => user.email === data.email)
