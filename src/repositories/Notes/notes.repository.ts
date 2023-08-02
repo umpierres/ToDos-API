@@ -8,13 +8,13 @@ export class NoteRepository {
             const note = new Note(dados.title, dados.description, dados.owner, dados.archived, dados.favorite);
     
             notes.push(note);
-            return note;
+            return note.toJSON();
     }
     //ok
     listNotes(owner: User) {
         const currentUserNotes = notes.filter((note) => note.toJson().owner === owner);
 
-        return currentUserNotes;
+        return currentUserNotes.map((notes) => notes.toJSON());
     }
 
     updateNote(id: string, dados: UpdateNoteDTO) {
@@ -40,7 +40,7 @@ export class NoteRepository {
 
         const deletedNote = notes.splice(noteIndex, 1)[0];
 
-        return deletedNote;
+        return deletedNote.toJSON;
     }
 
 }

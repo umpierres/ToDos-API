@@ -8,7 +8,7 @@ export class User extends BaseClass{
 
     toJSON() {
         return {
-            id: this.id,
+            id: this.getId(),
             email:this.email,
             password:this.password,
         };
