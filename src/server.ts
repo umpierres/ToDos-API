@@ -23,7 +23,12 @@ app.get('/', (req, res) => res.send({ message: 'OK' }));
 
 app.post("/users/signup", validateDataUser, userController.create)
 app.post("/users/signin", validateUserLogin, userController.signin)
-app.post("/notes/create-note", validateCreateNote, noteController.create)
-app.post("/notes/list-notes", noteController.list)
-app.post("/notes/update-note", validateUpdateNote, noteController.update)
-app.post("/notes/delete-note", noteController.delete)
+
+//notes
+app.post("/notes/create/", validateCreateNote, noteController.create)
+
+app.put("/notes/edit/", validateUpdateNote, noteController.update)
+
+app.delete("/notes/delete/", noteController.delete)
+
+app.get("/notes/list/", noteController.listNotes)

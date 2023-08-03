@@ -5,16 +5,17 @@ import { CreateNoteDTO, UpdateNoteDTO } from '../../usecases';
 export class NoteRepository {
     //ok
     createNote(dados: CreateNoteDTO) {
-            const note = new Note(dados.title, dados.description, dados.owner, dados.archived, dados.favorite);
+            const note = new Note(dados.title, dados.description, dados.favorite, dados.archived, dados.owner);
     
             notes.push(note);
-            return note.toJSON();
+            
+            return note;
     }
     //ok
-    listNotes(owner: User) {
-        const currentUserNotes = notes.filter((note) => note.toJson().owner === owner);
+    listNotes(ownerID: string) {
+        const currentUserNotes = notes.filter((note) => note.toJSON().owner.getId() === ownerID);
 
-        return currentUserNotes.map((notes) => notes.toJSON());
+        return currentUserNotes;
     }
 
     updateNote(id: string, dados: UpdateNoteDTO) {
@@ -38,9 +39,7 @@ export class NoteRepository {
             throw new Error("Nota não encontrada.");
         }
 
-        const deletedNote = notes.splice(noteIndex, 1)[0];
-
-        return deletedNote.toJSON;
+       notes.splice(noteIndex, 1)[0];
     }
 
 }

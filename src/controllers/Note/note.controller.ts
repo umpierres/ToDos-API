@@ -1,28 +1,14 @@
 import { Request, Response } from "express"
-import { CreateNote, UpdateNote } from "../../usecases";
-import { ListNotes } from "../../usecases/Notes/listNote.usecase";
+import { CreateNote, DeleteNote, ListNotes, UpdateNote } from "../../usecases";
 
 export class NoteController {
 
     create(req: Request, res:Response){
-        const {title, description,owner, archived, favorite} = req.body
+        const {title, description, favorite, archived,owner} = req.body
 
         const usecase = new CreateNote();
 
-        const response = usecase.execute({ title, description, owner, archived , favorite})
-
-        if(!response.success){
-            return res.status(400).json(response);
-        }
-
-        return res.status(201).json(response);
-    }
-    list(req: Request, res:Response) {
-        const {owner} = req.body
-
-        const usecase = new ListNotes();
-
-        const response = usecase.execute(owner)
+        const response = usecase.execute({ title, description, favorite, archived, owner} )
 
         if(!response.success){
             return res.status(400).json(response);
@@ -44,11 +30,24 @@ export class NoteController {
 
         return res.status(201).json(response);
     }
+    listNotes(req: Request, res:Response){
+        const {owner} = req.body
+
+        const usecase = new ListNotes();
+
+        const response = usecase.execute(owner.id)
+
+        if(!response.success){
+            return res.status(400).json(response);
+        }
+
+        return res.status(201).json(response);
+    }
 
     delete(req: Request, res:Response){
         const {id} = req.body
 
-        const usecase = new ListNotes();
+        const usecase = new DeleteNote();
 
         const response = usecase.execute(id)
 

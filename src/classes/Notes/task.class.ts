@@ -6,18 +6,19 @@ export class Note extends BaseClass {
 	constructor(
 		private title: string,
 		private description: string,
-		private owner: User,
-		private archived: boolean = false,
 		private favorite: boolean = false,
+		private archived: boolean = false,
+		private owner: Omit<User, 'senha'>,
+  
 	) {
 		super();
 	}
 
-	toJson() {
+	toJSON() {
 		return {
 			id: this.getId(),
-			title: this.title,
-			description: this.description,
+			title: this.getTitle(),
+			description: this.getDescription(),
 			archived: this.getArchived(), 
             owner: this.getOwner(),
             favorite: this.getFavorite(), 
@@ -33,7 +34,7 @@ export class Note extends BaseClass {
         return this.description;
     }
 
-    getOwner(): User {
+    getOwner(): Omit<User, 'senha'> {
         return this.owner;
     }
 
@@ -56,7 +57,7 @@ export class Note extends BaseClass {
         this.description = description;
     }
 
-    setOwner(owner: User): void {
+    setOwner(owner: Omit<User, 'senha'>): void  {
         this.owner = owner;
     }
 
