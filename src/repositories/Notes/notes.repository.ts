@@ -18,6 +18,21 @@ export class NoteRepository {
         return currentUserNotes;
     }
 
+    archiveNote(noteID: string) {
+		const noteIndex = notes.findIndex(
+			(note) => note.toJSON().id === noteID
+		);
+
+		if (noteIndex === -1) {
+			throw new Error("Nota não encontrada");
+		}
+
+		notes[noteIndex].setArchived();
+
+		return notes[noteIndex];
+	}
+
+
     updateNote(id: string, dados: UpdateNoteDTO) {
         const noteIndex = notes.findIndex((note) => note.getId() === id);
     
