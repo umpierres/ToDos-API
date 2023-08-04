@@ -25,10 +25,15 @@ app.post("/users/signup", validateDataUser, userController.create)
 app.post("/users/signin", validateUserLogin, userController.signin)
 
 //notes
-app.post("/notes/create/", validateCreateNote, noteController.create)
+app.post("/notes/:ownerID", validateCreateNote, noteController.create)
 
-app.put("/notes/edit/", validateUpdateNote, noteController.update)
+app.put("/notes/:ownerID/:noteID", validateUpdateNote, noteController.update)
 
-app.delete("/notes/delete/", noteController.delete)
+app.put(
+	"/notes/archived/:authorId/:noteId",
+	noteController.archive
+);
 
-app.get("/notes/list/", noteController.listNotes)
+app.delete("/notes/:ownerID/:noteID", noteController.delete)
+
+app.get("/notes/:ownerID", noteController.listNotes)
