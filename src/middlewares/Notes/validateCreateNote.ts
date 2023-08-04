@@ -7,7 +7,7 @@ export function validateCreateNote(req:Request, res: Response, next: NextFunctio
 	if (!note.description || !note.title || !note.owner || !note.archived || !note.favorite) {
 		return res
 			.status(400)
-			.json({ message: 'Insira todos os dados para atualizar a nota.' });
+			.json({ message: 'Insira todos os dados para criar a nota.' });
 	}
 
 
