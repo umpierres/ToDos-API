@@ -61,12 +61,12 @@ export class Note extends BaseClass {
         this.owner = owner;
     }
 
-    setArchived(archived: boolean): void {
-        this.archived = archived;
+    setArchived(): void {
+        this.archived = !this.archived;
     }
 
-    setFavorite(favorite: boolean): void {
-        this.favorite = favorite;
+    setFavorite(): void {
+        this.favorite = !this.favorite;
     }
 
     setDate(date: Date): void {
