@@ -12,7 +12,7 @@ export type CreateNoteDTO = {
 export type ReturnCreateNote = {
 	success: boolean;
 	message: string;
-	data?: Note 
+	data?: Note & { id: string };
 };
 
 export class CreateNote{
