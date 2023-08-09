@@ -9,7 +9,7 @@ export class NoteRepository {
     
             notes.push(note);
             
-            return note;
+            return note.toJSON;
     }
     //ok
     listNotes(ownerID: string) {

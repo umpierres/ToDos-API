@@ -6,7 +6,7 @@ export class NoteController {
 
     create(req: Request, res:Response){
         const {title, description, favorite, archived,owner} = req.body
-
+        
         const usecase = new CreateNote();
 
         const response = usecase.execute({ title, description, favorite, archived, owner} )
