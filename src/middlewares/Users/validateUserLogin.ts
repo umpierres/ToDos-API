@@ -9,13 +9,13 @@ export function validateUserLogin(
 
 	if (!email) {
 		return res.status(400).json({
-			message: 'Campo email é obrigatório!',
+			success: false, message: 'Campo email é obrigatório!',
 		});
 	}
 
 	if (!password) {
 		return res.status(400).json({
-			message: 'Campo senha é obrigatório!',
+			success: false, message: 'Campo senha é obrigatório!',
 		});
 	}
 
