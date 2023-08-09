@@ -7,18 +7,25 @@ export function validateDataUser(req:Request, res: Response, next: NextFunction)
 	if (!user.email || !user.password) {
 		return res
 			.status(400)
-			.json({ message: 'Insira todos os dados para cadastrar o usúario.' });
+			.json({success: false, message: 'Insira todos os dados para cadastrar o usúario.' });
 	}
 
-	if (!user.email.includes('@') || !user.email.includes('.com')) {
-		return res.status(400).json({ message: 'Insira um email válido.' });
+	if (typeof user.email !== 'string' || !user.email.includes('@') || !user.email.includes('.com') ) {
+		return res.status(400).json({success: false, message: 'Insira um email válido.' });
 	}
 
-	if (user.password.length < 6) {
+	if (user.password.length < 6 ) {
 		return res
 			.status(400)
-			.json({ message: 'Insira no mínimo 6 caracteres para senha.' });
+			.json({ success: false, message: 'Insira no mínimo 6 caracteres para senha.' });
 	}
 
-	next();
+	if (typeof user.password !== 'string') { 
+		return res
+			.status(400)
+			.json({ success: false, message: 'A senha precisa de letras e numeros!' });
+	}
+
+	next()
+
 }

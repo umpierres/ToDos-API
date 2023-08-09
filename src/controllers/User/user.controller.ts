@@ -1,9 +1,9 @@
 import { Request, Response } from "express"
 import { CreateUser } from '../../usecases';
-import { LoginUser } from "../../usecases/Users/loginUser.usecase";
+import { LoginUser } from "../../usecases";
 export class UserController {
 
-    create(req: Request, res:Response){
+    public signup(req: Request, res:Response){
         const {email, password} = req.body
 
         const usecase = new CreateUser()
@@ -17,7 +17,7 @@ export class UserController {
         return res.status(201).json(response);
     }
 
-    signin(req: Request, res: Response) {
+    public signin(req: Request, res: Response) {
 		const { email, password } = req.body;
 
 		const usecase = new LoginUser();

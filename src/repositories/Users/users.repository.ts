@@ -1,28 +1,25 @@
 import { users } from '../../database';
-import { User } from '../../classes';
-import { LoginDTO, UserDTO } from '../../usecases';
+import { User, UserJSON } from '../../classes';
+import {  UserDTO } from '../../usecases';
 
 export class UserRepository { 
-    listUsers(){
-        return users.map((user) => user.toJSON());
+    doesUserExist(email:string){
+        return users.some((user) => user.toJSON().email === email);
     }
 
-    createUser(dados:UserDTO){
+    createUser(dados:UserDTO): User{
         const user = new User(dados.email,dados.password)
         users.push(user)
 
-        return user.toJSON();
+        return user;
     }
 
-    findUserByCredentials(dados: LoginDTO) {
-		const user = users.find(
+    loginUser(dados: UserDTO):User | undefined {
+		return users.find(
 			(user) =>
                 user.toJSON().email === dados.email &&
                 user.toJSON().password === dados.password
 		);
 
-		if (!user) return;
-
-		return user.toJSON()
 	}
 }

@@ -8,8 +8,6 @@ import { validateUpdateNote } from './middlewares/Notes/validateUpdateNote';
 import { validateCreateNote } from './middlewares/Notes/validateCreateNote';
 
 const app = express();
-const userController = new UserController();
-const noteController = new NoteController();
 
 app.use(express.json());
 app.use(cors());
@@ -19,21 +17,19 @@ app.listen(process.env.PORT, () => {
     console.log(`Servidor rodando na porta: ${process.env.PORT}`)
 })
 
-app.get('/', (req, res) => res.send({ message: 'OK' }));
+app.get('/', (req, res) => res.status(200).json({ message: 'OK' }));
 
-app.post("/users/signup", validateDataUser, userController.create)
+// user
+const userController = new UserController();
+
+app.post("/users/signup", validateDataUser, userController.signup)
 app.post("/users/signin", validateUserLogin, userController.signin)
 
 //notes
+const noteController = new NoteController();
+
 app.post("/notes/:ownerID", validateCreateNote, noteController.create)
-
 app.put("/notes/:ownerID/:noteID", validateUpdateNote, noteController.update)
-
-app.put(
-	"/notes/archived/:authorId/:noteId",
-	noteController.archive
-);
-
+app.put("/notes/archived/:authorId/:noteId", noteController.archive);
 app.delete("/notes/:ownerID/:noteID", noteController.delete)
-
 app.get("/notes/:ownerID", noteController.listNotes)

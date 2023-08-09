@@ -1,3 +1,4 @@
+import { UserJSON } from '../../classes';
 import { UserRepository } from '../../repositories';
 
 export type UserDTO = {
@@ -8,28 +9,30 @@ export type UserDTO = {
 export type ReturnCreateUser = {
 	success: boolean;
 	message: string;
-	data?: UserDTO & { id: string };
+	newUserData?: Omit<UserJSON, 'password'>;
 };
 
 export class CreateUser{
-    execute(data: UserDTO): ReturnCreateUser{
+    public execute(newUser: UserDTO): ReturnCreateUser{
         const repository = new UserRepository();
 
-        const userExist = repository.listUsers().some((user) => user.email === data.email)
-
-        if(userExist){
+        if(repository.doesUserExist(newUser.email)){
             return {
 				success: false,
 				message: 'Usuário já existe.',
 			};
         }
 
-        const userCreated = repository.createUser(data);
+        const userCreated = repository.createUser(newUser);
+        const user = {
+            id: userCreated.toJSON().id,
+            email: userCreated.toJSON().email
+        }
 
         return {
             success:true,
             message: "Usuário cadastrado com sucesso.",
-            data: userCreated,
+            newUserData: user,
         }
     }
 }
