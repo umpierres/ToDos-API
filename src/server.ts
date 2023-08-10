@@ -2,10 +2,9 @@ import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import { NoteController, UserController } from './controllers';
-import { validateDataUser } from './middlewares/Users/validateDataUser';
-import { validateUserLogin } from './middlewares/Users/validateUserLogin';
-import { validateUpdateNote } from './middlewares/Notes/validateUpdateNote';
-import { validateCreateNote } from './middlewares/Notes/validateCreateNote';
+import { validateDataUser } from './middlewares/';
+import { validateUserLogin } from './middlewares/';
+import {  validateNote } from './middlewares';
 
 const app = express();
 
@@ -28,8 +27,7 @@ app.post("/users/signin", validateUserLogin, userController.signin)
 //notes
 const noteController = new NoteController();
 
-app.post("/notes/:ownerID", validateCreateNote, noteController.create)
-app.put("/notes/:ownerID/:noteID", validateUpdateNote, noteController.update)
-app.put("/notes/archived/:authorId/:noteId", noteController.archive);
-app.delete("/notes/:ownerID/:noteID", noteController.delete)
+app.post("/notes/:ownerID", validateNote, noteController.create)
 app.get("/notes/:ownerID", noteController.listNotes)
+app.put("/notes/:ownerID/:noteID", validateNote, noteController.update)
+app.delete("/notes/:ownerID/:noteID", noteController.delete)
