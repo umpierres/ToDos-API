@@ -22,4 +22,8 @@ export class UserRepository {
 		);
 
 	}
+    findUserByID(ownerID:string){
+        return users.find((user) => user.toJSON().id === ownerID);
+    }
+
 }
