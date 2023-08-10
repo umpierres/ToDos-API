@@ -1,54 +1,40 @@
 import { notes } from '../../database';
-import { Note, User } from '../../classes';
-import { CreateNoteDTO, UpdateNoteDTO } from '../../usecases';
+import { Note, NoteJSON, User } from '../../classes';
+import { UpdateNoteDTO } from '../../usecases';
+
+export type CreateNoteDTO = {
+    title:string,
+    description: string,
+    favorite: boolean,
+    archived: boolean,
+    owner: Omit<User, 'password'>,
+}
 
 export class NoteRepository {
     //ok
-    createNote(dados: CreateNoteDTO) {
+    createNote(dados: CreateNoteDTO) : Note {
             const note = new Note(dados.title, dados.description, dados.favorite, dados.archived, dados.owner);
-    
             notes.push(note);
             
-            return note.toJSON;
+            return note;
     }
     //ok
-    listNotes(ownerID: string) {
-        const currentUserNotes = notes.filter((note) => note.toJSON().owner.getId() === ownerID);
-
-        return currentUserNotes;
+    listNotes(ownerID: string) : NoteJSON[] {
+        return notes.filter((note) => note.toJSON().owner.id === ownerID).map((n) => n.toJSON());
     }
 
-    archiveNote(noteID: string) {
-		const noteIndex = notes.findIndex(
-			(note) => note.toJSON().id === noteID
-		);
-
-		if (noteIndex === -1) {
-			throw new Error("Nota não encontrada");
-		}
-
-		notes[noteIndex].setArchived();
-
-		return notes[noteIndex];
-	}
-
-
     updateNote(id: string, dados: UpdateNoteDTO) {
-        const noteIndex = notes.findIndex((note) => note.getId() === id);
+        const noteIndex = notes.findIndex((note) => note.toJSON().id === id);
     
         if (noteIndex === -1) {
             throw new Error("Nota não encontrada.");
         }
-
-        notes[noteIndex].setTitle(dados.title);
-        notes[noteIndex].setDescription(dados.description);
-
         return notes[noteIndex]
     }
 
     //ok
     deleteNote(id: string) {
-        const noteIndex = notes.findIndex((note) => note.getId() === id);
+        const noteIndex = notes.findIndex((note) => note.toJSON().id === id);
 
         if (noteIndex === -1) {
             throw new Error("Nota não encontrada.");
