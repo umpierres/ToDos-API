@@ -28,6 +28,6 @@ app.post("/users/signin", validateUserLogin, userController.signin)
 const noteController = new NoteController();
 
 app.post("/notes/:ownerID", validateNote, noteController.create)
-app.get("/notes/:ownerID", noteController.listNotes)
+app.get("/notes/:ownerID",) //listar
 app.put("/notes/:ownerID/:noteID", validateNote, noteController.update)
 app.delete("/notes/:ownerID/:noteID", noteController.delete)
