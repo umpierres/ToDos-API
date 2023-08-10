@@ -1,15 +1,16 @@
 import { Request, Response } from "express"
 import { CreateNote, DeleteNote, FilterDTO, ListNotes, UpdateNote } from "../../usecases";
-import { ArchiveNote } from "../../usecases/Notes/archiveNote";
+import { ArchiveNote } from "../../usecases/";
 
 export class NoteController {
 
     create(req: Request, res:Response){
-        const {title, description, favorite, archived,owner} = req.body
+        const {ownerID} = req.params
+        const {title, description, favorite, archived} = req.body
         
         const usecase = new CreateNote();
 
-        const response = usecase.execute({ title, description, favorite, archived, owner} )
+        const response = usecase.execute({ title, description, favorite, archived, ownerID} )
 
         if(!response.success){
             return res.status(400).json(response);
