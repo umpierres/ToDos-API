@@ -1,30 +1,52 @@
-import { Note, User } from '../../classes';
-import { NoteRepository } from '../../repositories';
+import { Note, NoteJSON, User } from '../../classes';
+import { NoteRepository, UserRepository } from '../../repositories';
 
 export type CreateNoteDTO = {
     title:string,
     description: string,
-    owner: Omit<User, 'senha'>,
     favorite: boolean,
     archived: boolean,
+    ownerID: string,
 }
 
-export type ReturnCreateNote = {
+export type ReturnNote = {
 	success: boolean;
 	message: string;
-	data?: Note & { id: string };
+	data?: {
+        note?: NoteJSON
+        notes?: Array<NoteJSON>
+    };
 };
 
 export class CreateNote{
-    execute(data: CreateNoteDTO): ReturnCreateNote{
+    execute(data: CreateNoteDTO): ReturnNote{
+        const userRepository = new UserRepository();
+        const currentUser = userRepository.findUserByID(data.ownerID)
+
+        if(!currentUser) {
+            return {
+				success: false,
+				message: 'Usuário não encontrado.',
+			}; 
+        }
+
         const repository = new NoteRepository();
 
-        const newNote = repository.createNote(data)
+        const newNote = repository.createNote({
+            title:data.title,
+            description: data.description,
+            favorite: data.favorite,
+            archived: data.archived,
+            owner: currentUser,
+        })
 
         return {
             success:true,
             message: "Nota cadastrado com sucesso.",
-            data: newNote,
+            data: {
+                note: newNote.toJSON(),
+                notes: repository.listNotes(data.ownerID)
+            },
         }
     }
 }
