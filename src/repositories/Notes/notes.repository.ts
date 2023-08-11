@@ -76,14 +76,11 @@ export class NoteRepository {
     }
 
     //ok
-    deleteNote(id: string) {
-        const noteIndex = notes.findIndex((note) => note.toJSON().id === id);
+    deleteNote(noteID: string) {
+        const noteIndex = notes.findIndex((note) => note.toJSON().id === noteID);
 
-        if (noteIndex === -1) {
-            throw new Error("Nota não encontrada.");
-        }
-
-       notes.splice(noteIndex, 1)[0];
+       const [deletedNote] = notes.splice(noteIndex, 1);
+       return deletedNote.toJSON()
     }
 
 }

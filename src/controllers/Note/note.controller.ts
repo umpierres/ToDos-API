@@ -60,11 +60,14 @@ export class NoteController {
     }
 
     delete(req: Request, res: Response) {
-        const { id } = req.body
+        const { noteID, ownerID } = req.params
 
         const usecase = new DeleteNote();
 
-        const response = usecase.execute(id)
+        const response = usecase.execute({
+            ownerID,
+            noteID,
+        })
 
         if (!response.success) {
             return res.status(400).json(response);
