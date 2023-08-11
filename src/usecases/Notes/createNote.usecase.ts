@@ -1,4 +1,4 @@
-import { Note, NoteJSON, User } from '../../classes';
+import { NoteJSON } from '../../classes';
 import { NoteRepository, UserRepository } from '../../repositories';
 
 export type CreateNoteDTO = {

@@ -1,6 +1,6 @@
 import express from "express";
 import { NoteController, UserController } from "../controllers";
-import { validateDataUser, validateNote, validateUserLogin } from "../middlewares";
+import { validateDataUser, validateNote, validateTitleNote, validateUserLogin } from "../middlewares";
 
 const app = express.Router();
 
@@ -16,7 +16,7 @@ app.post("/users/signin", validateUserLogin, userController.signin)
 const noteController = new NoteController();
 
 app.post("/notes/:ownerID", validateNote, noteController.create)
-app.get("/notes/:ownerID",) //listar
+app.get("/notes/:ownerID/", noteController.listNotes) //listar
 app.put("/notes/:ownerID/:noteID", validateNote, noteController.update)
 app.delete("/notes/:ownerID/:noteID", noteController.delete)
 

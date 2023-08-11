@@ -2,12 +2,21 @@ import { notes } from '../../database';
 import { Note, NoteJSON, User } from '../../classes';
 import { UpdateNoteDTO } from '../../usecases';
 
+// separar as filtragens, desse jeito não tá legal
+
+
 export type CreateNoteDTO = {
     title:string,
     description: string,
     favorite: boolean,
     archived: boolean,
     owner: Omit<User, 'password'>,
+}
+
+export type Filter = {
+    title?: string;
+    favorite?: boolean;
+    archived?: boolean;
 }
 
 export class NoteRepository {
@@ -19,8 +28,23 @@ export class NoteRepository {
             return note;
     }
     //ok
-    listNotes(ownerID: string) : NoteJSON[] {
-        return notes.filter((note) => note.toJSON().owner.id === ownerID).map((n) => n.toJSON());
+    listNotes(ownerID: string, filter?:Filter) : NoteJSON[] {
+        return notes
+        .filter((note) => {
+            const { owner, title, archived, favorite} = note.toJSON();
+            if (filter) {
+                if (
+                    (filter.title && title !== filter.title) ||
+                    (filter.archived !== undefined && archived !== filter.archived) ||
+                    (filter.favorite !== undefined && favorite !== filter.favorite)
+                ) {
+                    return false;
+                }
+            }
+
+            return owner.id === ownerID;
+        })
+        .map((n) => n.toJSON());
     }
 
     updateNote(id: string, dados: UpdateNoteDTO) {
