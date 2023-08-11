@@ -5,9 +5,6 @@ import { Response } from "express";
 type updateNoteDTO = {
 	title?: string,
 	description?: string,
-    favorite?: boolean, 
-	archived?: boolean, 
-    date: Date, 
 }
 
 export type NoteJSON = {
@@ -50,34 +47,19 @@ export class Note extends BaseClass {
 		};
 	}
 
-    public updateNote(newInfo: updateNoteDTO, res: Response) {
+    public updateNoteDetails(newInfo: updateNoteDTO) {
         if(newInfo.title) {
             if(newInfo.title.length < 3) {
-                return res
-                .status(400)
-                .json({ success: false, message: 'O titulo é muito curto.' });
+                return false;
             }
             this._title = newInfo.title
         }
         if(newInfo.description) {
             if(newInfo.description.length < 3 || newInfo.description.length > 100) {
-                return res
-                .status(400)
-                .json({success: false, message: 'A descrição é muito curta ou muito longa.' });
+                return false;
             }
             this._description = newInfo.description
         }
-        if(newInfo.archived) {
-            this._archived = newInfo.archived
-        }
-        if(newInfo.favorite) {
-            this._favorite = newInfo.favorite
-        }
-        if(newInfo.date) {
-            this._date = newInfo.date
-        }
-        return res
-        .status(200)
-        .json({success: true, message: 'Nota atualizada com sucesso!' });
+        return true;
     }
 }
