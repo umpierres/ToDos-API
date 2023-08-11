@@ -1,6 +1,6 @@
 import express from "express";
 import { NoteController, UserController } from "../controllers";
-import { validateDataUser, validateNote, validateTitleNote, validateUserLogin } from "../middlewares";
+import { validateCreateNote, validateDataUser, validateTitleNote, validateUpdateNote, validateUserLogin } from "../middlewares";
 
 const app = express.Router();
 
@@ -15,9 +15,9 @@ app.post("/users/signin", validateUserLogin, userController.signin)
 //notes
 const noteController = new NoteController();
 
-app.post("/notes/:ownerID", validateNote, noteController.create)
+app.post("/notes/:ownerID", validateCreateNote, noteController.create)
 app.get("/notes/:ownerID/", noteController.listNotes) //listar
-app.put("/notes/:ownerID/:noteID", validateNote, noteController.update)
+app.put("/notes/:ownerID/:noteID", validateUpdateNote, noteController.update)
 app.delete("/notes/:ownerID/:noteID", noteController.delete)
 
 export default app;

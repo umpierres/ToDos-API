@@ -1,7 +1,7 @@
 import { NextFunction,Request,Response } from "express";
 import { CreateNoteDTO } from "../../usecases";
 
-export function validateNote(req:Request, res: Response, next: NextFunction){
+export function validateCreateNote(req:Request, res: Response, next: NextFunction){
     const note: CreateNoteDTO = req.body;
 
 	if (!note.description || !note.title ) {
@@ -24,7 +24,7 @@ export function validateNote(req:Request, res: Response, next: NextFunction){
 	if(typeof note.title !== 'string' || typeof note.description !== 'string' ) {
 		return res
 			.status(400)
-			.json({success: false, message: 'O titulo ou a senha precisa conter alguma letra!' });
+			.json({success: false, message: 'O titulo e/ou a descrição precisa conter alguma letra!' });
 	}
 
 	next();

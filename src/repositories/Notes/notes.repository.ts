@@ -1,6 +1,5 @@
 import { notes } from '../../database';
 import { Note, NoteJSON, User } from '../../classes';
-import { UpdateNoteDTO } from '../../usecases';
 
 // separar as filtragens, desse jeito não tá legal
 
@@ -11,6 +10,11 @@ export type CreateNoteDTO = {
     favorite: boolean,
     archived: boolean,
     owner: Omit<User, 'password'>,
+}
+export type UpdateNoteDTO = {
+    noteID: string,
+    title?:string,
+    description?: string,
 }
 
 export type Filter = {
@@ -47,13 +51,28 @@ export class NoteRepository {
         .map((n) => n.toJSON());
     }
 
-    updateNote(id: string, dados: UpdateNoteDTO) {
-        const noteIndex = notes.findIndex((note) => note.toJSON().id === id);
+    public findNoteByID(
+		ownerID: string,
+		noteID: string
+	): NoteJSON | undefined {
+		return notes
+			.find(
+				(note) =>
+                    note.toJSON().owner.id === ownerID &&
+                    note.toJSON().id === noteID
+			)
+			?.toJSON();
+	}
+
+    updateNote(data: UpdateNoteDTO) : NoteJSON {
+        const noteIndex = notes.findIndex((note) => note.toJSON().id === data.noteID);
     
-        if (noteIndex === -1) {
-            throw new Error("Nota não encontrada.");
-        }
-        return notes[noteIndex]
+        notes[noteIndex].updateNoteDetails({
+            title: data.title,
+            description: data.description,
+        })
+
+        return notes[noteIndex].toJSON()
     }
 
     //ok

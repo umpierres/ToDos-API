@@ -1,27 +1,54 @@
 import { Note } from '../../classes';
-import { NoteRepository } from '../../repositories';
+import { NoteRepository, UserRepository } from '../../repositories';
+import { ReturnNote } from './createNote.usecase';
 
-export type UpdateNoteDTO = {
-    title:string,
-    description: string,
+export type UpdateDTO = {
+    ownerID: string,
+    noteID:string,
+    newInfo: {
+        title?:string,
+        description?: string,
+    }
 }
 
-export type ReturnUpdate = {
-    success: boolean;
-    message: string;
-    data?: Note;
-};
 
 export class UpdateNote {
-    execute(id: string, data: UpdateNoteDTO): ReturnUpdate {
-        const repository = new NoteRepository();
+    execute(data: UpdateDTO): ReturnNote {
+        const {newInfo, noteID, ownerID} = data
+        const noteRepository = new NoteRepository()
+        const userRepository = new UserRepository();
 
-        const updatedNote = repository.updateNote(id, data);
+        const currentUser = userRepository.findUserByID(ownerID)
+
+        if(!currentUser) {
+            return {
+				success: false,
+				message: 'Usuário não encontrado. Não foi possivel atualizar a nota.',
+			}; 
+        }
+
+        const note = noteRepository.findNoteByID(
+            ownerID,
+            noteID
+        )
+
+        if(!note){
+            return {
+				success: false,
+				message: 'Nota não encontrado.',
+			}; 
+        }
+
+        const updatedNote = noteRepository.updateNote({
+                noteID, title: newInfo.title, description: newInfo.description
+            })
 
         return {
             success: true,
             message: "Nota atualizada com sucesso.",
-            data: updatedNote,
+            data: {
+                note: updatedNote
+            }
         };
     }
 }
