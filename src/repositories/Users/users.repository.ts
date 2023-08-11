@@ -1,5 +1,5 @@
 import { users } from '../../database';
-import { User, UserJSON } from '../../classes';
+import { User } from '../../classes';
 import {  UserDTO } from '../../usecases';
 
 export class UserRepository { 

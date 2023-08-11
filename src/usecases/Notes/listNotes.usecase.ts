@@ -1,8 +1,5 @@
-import { NoteJSON } from '../../classes';
 import { Filter, NoteRepository, UserRepository } from '../../repositories';
 import { ReturnNote } from './createNote.usecase';
-
-// separar as filtragens, desse jeito não tá legal
 
 export class ListNotes{
     execute(ownerID: string, filter?: Filter) : ReturnNote {

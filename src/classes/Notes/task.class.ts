@@ -1,6 +1,5 @@
 import { BaseClass } from "../BaseClass/baseClass.class";
 import { User, UserJSON } from "../User/user.class";
-import { Response } from "express";
 
 type updateNoteDTO = {
 	title?: string,

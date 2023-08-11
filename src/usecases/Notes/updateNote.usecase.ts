@@ -1,4 +1,3 @@
-import { Note } from '../../classes';
 import { NoteRepository, UserRepository } from '../../repositories';
 import { ReturnNote } from './createNote.usecase';
 

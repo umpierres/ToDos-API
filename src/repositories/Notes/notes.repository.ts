@@ -1,9 +1,6 @@
 import { notes } from '../../database';
 import { Note, NoteJSON, User } from '../../classes';
 
-// separar as filtragens, desse jeito não tá legal
-
-
 export type CreateNoteDTO = {
     title:string,
     description: string,

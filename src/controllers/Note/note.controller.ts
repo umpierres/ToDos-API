@@ -2,9 +2,6 @@ import { Request, Response } from "express"
 import { CreateNote, DeleteNote, ListNotes, UpdateNote } from "../../usecases";
 import { Filter } from "../../repositories";
 
-// separar as filtragens, desse jeito não tá legal
-
-
 export class NoteController {
 
     create(req: Request, res: Response) {
