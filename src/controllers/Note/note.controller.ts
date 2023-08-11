@@ -1,5 +1,8 @@
 import { Request, Response } from "express"
-import { CreateNote, DeleteNote, UpdateNote } from "../../usecases";
+import { CreateNote, DeleteNote, ListNotes, UpdateNote } from "../../usecases";
+import { Filter } from "../../repositories";
+
+// separar as filtragens, desse jeito não tá legal
 
 
 export class NoteController {
@@ -11,6 +14,22 @@ export class NoteController {
         const usecase = new CreateNote();
 
         const response = usecase.execute({ title, description, favorite, archived, ownerID} )
+
+        if(!response.success){
+            return res.status(400).json(response);
+        }
+
+        return res.status(201).json(response);
+    }
+
+    listNotes(req: Request, res:Response){
+        const {ownerID} = req.params
+        const {title, favorite, archived} = req.query as Filter
+
+        
+        const usecase = new ListNotes();
+
+        const response = usecase.execute( ownerID,{title, favorite, archived})
 
         if(!response.success){
             return res.status(400).json(response);
