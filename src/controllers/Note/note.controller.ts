@@ -21,16 +21,12 @@ export class NoteController {
 
     listNotes(req: Request, res: Response) {
         const { ownerID } = req.params
-        const filter = req.query 
+        const { title, favorite, archived } = req.query as Filter
 
 
-        const usecase = new ListNotes({
-            title: filter.title?.toString(),
-            favorite: filter.favorite === 'true',
-            archived: filter.archived === 'true',
-        });
+        const usecase = new ListNotes();
 
-        const response = usecase.execute(ownerID)
+        const response = usecase.execute(ownerID, { title, favorite, archived })
 
         if (!response.success) {
             return res.status(400).json(response);

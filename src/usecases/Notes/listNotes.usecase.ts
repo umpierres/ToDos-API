@@ -2,11 +2,7 @@ import { Filter, NoteRepository, UserRepository } from '../../repositories';
 import { ReturnNote } from './createNote.usecase';
 
 export class ListNotes{
-    private filter: Filter
-    constructor(filterQuery: Filter) {
-		this.filter = filterQuery;
-	}
-    execute(ownerID: string) : ReturnNote {
+    execute(ownerID: string, filter?: Filter) : ReturnNote {
         const noteRepository = new NoteRepository()
         const userRepository = new UserRepository();
         const currentUser = userRepository.findUserByID(ownerID)
@@ -18,7 +14,7 @@ export class ListNotes{
 			}; 
         }
 
-        const notesCurrentUser = noteRepository.listNotes(ownerID, this.filter);
+        const notesCurrentUser = noteRepository.listNotes(ownerID, filter);
 
         return {
             success:true,
