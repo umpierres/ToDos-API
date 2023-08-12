@@ -18,8 +18,8 @@ const noteController = new NoteController();
 app.post("/notes/:ownerID", validateCreateNote, noteController.create)
 app.get("/notes/:ownerID/", noteController.listNotes)
 app.put("/notes/:ownerID/:noteID", validateUpdateNote, noteController.update)
-app.put("/notes/:ownerID/:noteID/archive", validateUpdateNote, noteController.archive)
-app.put("/notes/:ownerID/:noteID/favorite", validateUpdateNote, noteController.favorite)
+app.put("/notes/:ownerID/:noteID/archive", noteController.archive)
+app.put("/notes/:ownerID/:noteID/favorite", noteController.favorite)
 app.delete("/notes/:ownerID/:noteID", noteController.delete)
 
 export default app;
