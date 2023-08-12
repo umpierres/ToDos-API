@@ -37,13 +37,14 @@ export class NoteController {
 
     update(req: Request, res: Response) {
         const { noteID, ownerID } = req.params
-        const { title, description} = req.body
+        const { title, description, action} = req.body
 
         const usecase = new UpdateNote();
 
         const response = usecase.execute({
             ownerID,
             noteID,
+            action: 'update',
             newInfo: {
                 title, description
             }
@@ -56,6 +57,44 @@ export class NoteController {
         return res.status(201).json(response);
     }
 
+    archive(req: Request, res: Response) {
+        const { noteID, ownerID } = req.params;
+    
+        const usecase = new UpdateNote();
+    
+        const response = usecase.execute({
+            ownerID,
+            noteID,
+            action: 'archive',
+            newInfo:{}
+        });
+    
+        if (!response.success) {
+            return res.status(400).json(response);
+        }
+    
+        return res.status(200).json(response);
+    }
+
+    favorite(req: Request, res: Response) {
+        const { noteID, ownerID } = req.params;
+    
+        const usecase = new UpdateNote();
+    
+        const response = usecase.execute({
+            ownerID,
+            noteID,
+            action: 'favorite',
+            newInfo:{}
+        });
+    
+        if (!response.success) {
+            return res.status(400).json(response);
+        }
+    
+        return res.status(200).json(response);
+    }
+    
     delete(req: Request, res: Response) {
         const { noteID, ownerID } = req.params
 

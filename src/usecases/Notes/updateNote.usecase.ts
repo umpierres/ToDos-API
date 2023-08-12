@@ -4,6 +4,7 @@ import { ReturnNote } from './createNote.usecase';
 export type UpdateDTO = {
     ownerID: string,
     noteID:string,
+    action: 'update' | 'archive' | 'favorite',
     newInfo: {
         title?:string,
         description?: string,
@@ -31,17 +32,24 @@ export class UpdateNote {
             noteID
         )
 
-        if(!note){
+       
+        let updatedNote;
+        if (data.action === 'update') {
+         updatedNote = noteRepository.updateNote({
+                noteID, title: newInfo.title, description: newInfo.description
+            })
+        } else if(data.action === "archive") {
+            updatedNote = noteRepository.toggleArchiveStatus(noteID)
+        } else if(data.action === "favorite"){
+            updatedNote = noteRepository.toggleFavoriteStatus(noteID)
+        }
+
+        if(!updatedNote){
             return {
 				success: false,
 				message: 'Nota não encontrado.',
 			}; 
         }
-
-        const updatedNote = noteRepository.updateNote({
-                noteID, title: newInfo.title, description: newInfo.description
-            })
-
         return {
             success: true,
             message: "Nota atualizada com sucesso.",

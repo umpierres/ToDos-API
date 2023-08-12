@@ -61,4 +61,12 @@ export class Note extends BaseClass {
         }
         return true;
     }
+
+    toggleArchiveStatus() {
+        this._archived = !this._archived;
+    }
+
+    toggleFavoriteStatus() {
+        this._favorite = !this._favorite;
+    }
 }

@@ -72,6 +72,20 @@ export class NoteRepository {
         return notes[noteIndex].toJSON()
     }
 
+    toggleArchiveStatus(noteID: string): NoteJSON | null {
+        const noteIndex = notes.findIndex((note) => note.toJSON().id === noteID);
+
+        notes[noteIndex].toggleArchiveStatus();
+        return notes[noteIndex].toJSON();
+    }
+
+    toggleFavoriteStatus(noteID: string): NoteJSON | null {
+        const noteIndex = notes.findIndex((note) => note.toJSON().id === noteID);
+
+        notes[noteIndex].toggleFavoriteStatus();
+        return notes[noteIndex].toJSON();
+    }
+
     //ok
     deleteNote(noteID: string) {
         const noteIndex = notes.findIndex((note) => note.toJSON().id === noteID);
