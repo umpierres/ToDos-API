@@ -35,7 +35,7 @@ export class NoteRepository {
             const { owner, title, archived, favorite} = note.toJSON();
             if (filter) {
                 if (
-                    (filter.title && title !== filter.title) ||
+                    (filter.title && !title.includes(filter.title)) ||
                     (filter.archived !== undefined && archived !== filter.archived) ||
                     (filter.favorite !== undefined && favorite !== filter.favorite)
                 ) {
