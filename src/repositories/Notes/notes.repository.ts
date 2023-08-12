@@ -29,23 +29,27 @@ export class NoteRepository {
             return note;
     }
     //ok
-    listNotes(ownerID: string, filter?:Filter) : NoteJSON[] {
-        return notes
-        .filter((note) => {
-            const { owner, title, archived, favorite} = note.toJSON();
-            if (filter) {
-                if (
-                    (filter.title && !title.includes(filter.title)) ||
-                    (filter.archived !== undefined && archived !== filter.archived) ||
-                    (filter.favorite !== undefined && favorite !== filter.favorite)
-                ) {
-                    return false;
-                }
-            }
+    listNotes(ownerID: string, filter:Filter) : NoteJSON[] {
+        const { title, archived, favorite} = filter;
 
-            return owner.id === ownerID;
-        })
-        .map((n) => n.toJSON());
+        if (!title && archived === undefined && favorite === undefined) {
+            return notes.map(note => note.toJSON()); 
+        }
+
+        let filteredList = [...notes]
+        if (title !== undefined) {
+            filteredList = filteredList.filter(n => n.toJSON().title.startsWith(title));
+        }
+    
+        if (archived !== undefined) {
+            filteredList = filteredList.filter(n => n.toJSON().archived === archived);
+        }
+
+        if (favorite !== undefined) {
+            filteredList = filteredList.filter(n => n.toJSON().favorite === favorite);
+        }
+    
+        return filteredList.map(note => note.toJSON())
     }
 
     public findNoteByID(
