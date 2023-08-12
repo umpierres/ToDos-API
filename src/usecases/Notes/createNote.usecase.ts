@@ -45,7 +45,7 @@ export class CreateNote{
             message: "Nota cadastrado com sucesso.",
             data: {
                 note: newNote.toJSON(),
-                notes: repository.listNotes(data.ownerID)
+                notes: repository.listNotes(data.ownerID, {})
             },
         }
     }
